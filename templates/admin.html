@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}لوحة الإدارة — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="admin-head"><div><span class="eyebrow">CONTROL CENTER</span><h1>لوحة الإدارة</h1></div><div><a class="secondary" href="{{ url_for('admin_settings') }}">الإعدادات</a><a class="secondary" href="{{ url_for('admin_logout') }}">خروج</a></div></div>
+<div class="stats">
+  <div><small>طلبات اليوم</small><b>{{ orders|length }}</b></div>
+  <div><small>سعر البيع</small><b>{{ site.sell_rate }} ₪</b></div>
+  <div><small>سعر الشراء</small><b>{{ site.buy_rate }} ₪</b></div>
+</div>
+<section class="orders">
+<h2>الطلبات</h2>
+{% if orders %}
+<div class="table-wrap"><table><thead><tr><th>الطلب</th><th>النوع</th><th>المبلغ</th><th>العميل</th><th>المزود</th><th>الإثبات</th><th>الحالة</th><th>الوقت</th></tr></thead>
+<tbody>
+{% for o in orders %}
+<tr><td>#{{ o.order_code }}</td><td>{{ o.order_type }}</td><td>{{ "%.2f"|format(o.usdt_amount) }} USDT<br>{{ "%.2f"|format(o.fiat_amount) }} ₪</td><td>{{ o.customer_name }}<br>{{ o.customer_phone }}</td><td>{{ o.provider }}</td><td>{% if o.tx_image %}<a href="{{ url_for('uploads', filename=o.tx_image) }}" target="_blank">عرض الصورة</a>{% else %}-{% endif %}</td>
+<td><form method="post" action="{{ url_for('update_status', order_id=o.id) }}"><select name="status" onchange="this.form.submit()">{% for st in ['قيد المراجعة','قيد التنفيذ','تم التحويل','مكتملة','مرفوضة'] %}<option {% if o.status==st %}selected{% endif %}>{{ st }}</option>{% endfor %}</select></form></td><td>{{ o.created_at }}</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty">لا توجد طلبات حتى الآن.</div>{% endif %}
+</section>
+{% endblock %}

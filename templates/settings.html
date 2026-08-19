@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}الإعدادات — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="admin-head"><div><span class="eyebrow">SETTINGS</span><h1>إعدادات الموقع</h1></div><a class="secondary" href="{{ url_for('admin') }}">← الطلبات</a></div>
+<section class="form-card">
+<form method="post">
+<div class="settings-grid">
+<div><label>الاسم</label><input name="name" value="{{ site.name }}"></div>
+<div><label>رقم الجوال</label><input name="phone" value="{{ site.phone }}"></div>
+<div><label>WhatsApp</label><input name="whatsapp" value="{{ site.whatsapp }}"></div>
+<div><label>Telegram Username</label><input name="telegram_username" value="{{ site.telegram_username }}"></div>
+<div><label>سعر البيع</label><input name="sell_rate" type="number" step="0.0001" value="{{ site.sell_rate }}"></div>
+<div><label>سعر الشراء</label><input name="buy_rate" type="number" step="0.0001" value="{{ site.buy_rate }}"></div>
+<div class="full"><label>رابط / عنوان محفظة USDT TRC20</label><input name="wallet_address" value="{{ site.wallet_address }}"></div>
+<div><label>اسم المستفيد</label><input name="recipient_name" value="{{ site.recipient_name }}"></div>
+<div><label>رقم المستفيد</label><input name="recipient_phone" value="{{ site.recipient_phone }}"></div>
+<div class="full"><label>مزودو الخدمة — افصل بينهم بعلامة |</label><input name="service_providers" value="{{ site.service_providers }}"></div>
+</div>
+<button class="primary" type="submit">حفظ التغييرات ✓</button>
+</form>
+</section>
+{% endblock %}

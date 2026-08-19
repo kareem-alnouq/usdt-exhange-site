@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}طلب #{{ order.order_code }} — {{ site.name }}{% endblock %}
+{% block content %}
+<section class="success-card premium-result">
+  <div id="statusIcon" class="success-icon glow-check">✓</div>
+  <span class="eyebrow">ORDER #{{ order.order_code }}</span>
+  <h1 id="statusTitle">تم استلام طلبك</h1>
+  <p class="result-lead">طلبك وصل بنجاح، وسيتم تنفيذ الحوالة خلال دقائق فقط.</p>
+
+  <div class="success-summary">
+    <div><span>العملية</span><b>{{ order.order_type }}</b></div>
+    <div><span>الكمية</span><b>{{ "%.2f"|format(order.usdt_amount) }} USDT</b></div>
+    <div><span>القيمة</span><b>{{ "%.2f"|format(order.fiat_amount) }} ₪</b></div>
+    <div><span>رقم الطلب</span><b>#{{ order.order_code }}</b></div>
+  </div>
+
+  <div id="liveStatus" class="status-pending">قيد المراجعة</div>
+  <p id="statusText" class="muted">يمكنك إرسال إشعار الحوالة عبر WhatsApp الآن.</p>
+
+  <a class="whatsapp-btn" href="https://wa.me/{{ site.whatsapp|replace('+','')|replace(' ','') }}?text={{ whatsapp_message|urlencode }}" target="_blank">
+    إرسال إشعار الحوالة عبر WhatsApp
+  </a>
+  <a class="secondary" href="{{ url_for('index') }}">العودة للرئيسية</a>
+</section>
+
+<script>
+async function checkStatus(){
+  try{
+    const r = await fetch("/order/{{ order.order_code }}/status", {cache:"no-store"});
+    const data = await r.json();
+    if(data.status === "تم التحويل"){
+      document.getElementById("liveStatus").textContent = "✓ تم التحويل";
+      document.getElementById("liveStatus").className = "status-done";
+      document.getElementById("statusTitle").textContent = "تم تحويل الحوالة";
+      document.getElementById("statusText").textContent = "تم تنفيذ طلبك بنجاح.";
+      document.getElementById("statusIcon").textContent = "✓";
+    }
+  }catch(e){}
+}
+checkStatus();
+setInterval(checkStatus, 3000);
+</script>
+{% endblock %}

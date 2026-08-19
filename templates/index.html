@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ site.name }} — USDT{% endblock %}
+{% block content %}
+<section class="hero compact gold-home-hero">
+  <div class="hero-copy">
+    <span class="eyebrow">USDT • FAST TRANSFER</span>
+    <h1>شراء وبيع <span>USDT</span></h1>
+    <p>تجربة سريعة وآمنة لتحويل USDT — اختر العملية المناسبة وابدأ خلال دقائق.</p>
+  </div>
+</section>
+
+<section class="home-trade-layout">
+  <!-- العبارات على اليمين -->
+  <aside class="home-benefits">
+    <div class="benefit-head">لماذا تختارنا؟</div>
+    <div class="benefit-item">
+      <span class="benefit-icon">⚡</span>
+      <div><b>سرعة في التنفيذ</b><small>معالجة الطلبات بأسرع وقت ممكن.</small></div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">🛡</span>
+      <div><b>أمان وموثوقية</b><small>بياناتك وطلباتك تتم متابعتها بأمان.</small></div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">💰</span>
+      <div><b>أسعار واضحة</b><small>تعرف السعر والمبلغ قبل تأكيد الطلب.</small></div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">💬</span>
+      <div><b>متابعة عبر Telegram</b><small>يصلك إشعار الطلب مباشرة بعد الإرسال.</small></div>
+    </div>
+  </aside>
+
+  <!-- زرين تحت بعض -->
+  <div class="home-actions">
+    <a class="trade-card compact-card action-card action-sell" href="{{ url_for('sell') }}">
+      <div class="trade-top"><span class="trade-icon">↑</span><span class="mini">SELL</span></div>
+      <div>
+        <h2>بيع USDT</h2>
+        <p>حوّل USDT واستلم قيمتها بالشيكل.</p>
+      </div>
+      <div class="action-button-label">ابدأ البيع <span>←</span></div>
+    </a>
+
+    <a class="trade-card compact-card action-card action-buy" href="{{ url_for('buy') }}">
+      <div class="trade-top"><span class="trade-icon">↓</span><span class="mini">BUY</span></div>
+      <div>
+        <h2>شراء USDT</h2>
+        <p>اشترِ USDT بسهولة وبخطوات واضحة.</p>
+      </div>
+      <div class="action-button-label">ابدأ الشراء <span>←</span></div>
+    </a>
+  </div>
+</section>
+
+<div class="contact-bar">
+  <a href="https://wa.me/970597511457" target="_blank">WhatsApp</a>
+  <span>0597511457</span>
+  <a href="https://t.me/kareem_alnouq" target="_blank">Telegram</a>
+</div>
+<div class="notice"><span>●</span> الحوالة فورية وخلال دقائق فقط بعد مراجعة الطلب.</div>
+{% endblock %}

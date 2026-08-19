@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}بيع USDT — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="page-head"><a href="{{ url_for('index') }}">← الرئيسية</a><span>بيع USDT</span></div>
+
+{% if step == 1 %}
+<section class="form-card compact-form">
+  <div class="card-heading"><span class="trade-icon">↑</span><div><h1>بيع USDT</h1><p>280 ₪ لكل 100 USDT</p></div></div>
+  <form method="post">
+    <label>المبلغ المراد بيعه</label>
+    <div class="money-input"><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="100" required><span>USDT</span></div>
+    <div class="calc-preview">المبلغ المستحق لك <strong id="calc">0.00 ₪</strong></div>
+    <button class="primary" type="submit">التالي</button>
+  </form>
+</section>
+<script>window.rate={{ site.sell_rate|float }};</script>
+{% else %}
+<section class="form-card compact-form">
+  <div class="summary"><span>المبلغ المستحق لك</span><strong>{{ "%.2f"|format(fiat) }} ₪</strong><small>{{ "%.2f"|format(amount) }} USDT × {{ site.sell_rate }} ₪</small></div>
+
+  <div class="wallet-box">
+    <small>رابط المحفظة للدفع (TRC20)</small>
+    <div class="copy-row"><code id="wallet">{{ site.wallet_address }}</code><button type="button" class="copy-btn" onclick="copyWallet()">نسخ</button></div>
+  </div>
+
+  <form method="post" action="{{ url_for('sell_submit') }}" enctype="multipart/form-data">
+    <input type="hidden" name="amount" value="{{ amount }}">
+    <label>اسمك</label><input name="customer_name" required placeholder="الاسم الكامل">
+    <label>رقم جوالك</label><input name="customer_phone" type="tel" required placeholder="05xxxxxxxx">
+    <label>مزود الخدمة</label>
+    <select name="provider" required>
+      <option value="">اختر مزود الخدمة</option>
+      <option>جوال باي</option><option>بنك فلسطين</option><option>بال باي</option>
+    </select>
+
+    <label>إشعار المعاملة <small class="optional">اختياري</small></label>
+    <div class="upload optional-upload"><input name="tx_image" type="file" accept="image/png,image/jpeg,image/webp"><span>ألصق/ارفع صورة المعاملة هنا (اختياري)</span></div>
+    <a class="whatsapp-btn small-wa" href="https://wa.me/{{ site.whatsapp|replace('+','')|replace(' ','') }}?text=مرحباً، أرسلت إشعار معاملة بيع USDT بقيمة {{ '%.2f'|format(fiat) }} شيكل." target="_blank">إرسال الإشعار عبر WhatsApp</a>
+    <p class="muted center">يمكنك إرسال صورة المعاملة هنا أو عبر WhatsApp أو Telegram.</p>
+    <button class="primary" type="submit">إرسال الطلب</button>
+  </form>
+</section>
+<script>
+function copyWallet(){
+  const value=document.getElementById("wallet").innerText;
+  navigator.clipboard.writeText(value);
+  const b=document.querySelector(".copy-btn"); b.textContent="تم النسخ ✓";
+  setTimeout(()=>b.textContent="نسخ",1500);
+}
+</script>
+{% endif %}
+{% endblock %}

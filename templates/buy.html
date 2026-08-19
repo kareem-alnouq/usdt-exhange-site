@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}شراء USDT — {{ site.name }}{% endblock %}
+{% block content %}
+<div class="page-head"><a href="{{ url_for('index') }}">← الرئيسية</a><span>شراء USDT</span></div>
+
+{% if step == 1 %}
+<section class="form-card compact-form">
+  <div class="card-heading"><span class="trade-icon">↓</span><div><h1>شراء USDT</h1><p>300 ₪ لكل 100 USDT</p></div></div>
+  <form method="post">
+    <label>المبلغ المراد شراؤه</label>
+    <div class="money-input"><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="100" required><span>USDT</span></div>
+    <div class="calc-preview">المبلغ المطلوب دفعه <strong id="calc">0.00 ₪</strong></div>
+    <button class="primary" type="submit">التالي</button>
+  </form>
+</section>
+<script>window.rate={{ site.buy_rate|float }};</script>
+{% else %}
+<section class="form-card compact-form">
+  <div class="summary"><span>المبلغ المطلوب دفعه</span><strong>{{ "%.2f"|format(fiat) }} ₪</strong><small>{{ "%.2f"|format(amount) }} USDT × {{ site.buy_rate }} ₪</small></div>
+  <div class="payment-box">
+    <small>بيانات التحويل</small>
+    <p><b>{{ site.recipient_name }}</b></p>
+    <p>{{ site.recipient_phone }}</p>
+    <div class="providers-inline"><span>جوال باي</span></div>
+  </div>
+  <form method="post" action="{{ url_for('buy_submit') }}" enctype="multipart/form-data">
+    <input type="hidden" name="amount" value="{{ amount }}">
+    <label>رقم جوالك</label><input name="customer_phone" type="tel" required placeholder="05xxxxxxxx">
+    <label>إشعار الحوالة <small class="optional">اختياري</small></label>
+    <div class="upload optional-upload"><input name="tx_image" type="file" accept="image/png,image/jpeg,image/webp"><span>ارفع صورة الحوالة (اختياري)</span></div>
+    <a class="whatsapp-btn small-wa" href="https://wa.me/{{ site.whatsapp|replace('+','')|replace(' ','') }}?text=مرحباً، أرسلت إشعار حوالة شراء USDT بقيمة {{ '%.2f'|format(fiat) }} شيكل." target="_blank">إرسال الإشعار عبر WhatsApp</a>
+    <label>عنوان محفظتك USDT TRC20</label><input name="wallet_address" required placeholder="ألصق عنوان TRC20 هنا">
+    <button class="primary" type="submit">إرسال الطلب</button>
+  </form>
+</section>
+{% endif %}
+{% endblock %}
