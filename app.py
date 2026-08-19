@@ -69,7 +69,7 @@ def init_db():
         conn.execute("INSERT OR IGNORE INTO settings(key,value) VALUES (?,?)", (k, v))
     conn.commit()
     conn.close()
-
+init_db()
 def settings():
     conn = db()
     rows = conn.execute("SELECT key,value FROM settings").fetchall()
