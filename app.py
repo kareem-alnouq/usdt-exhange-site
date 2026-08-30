@@ -26,7 +26,7 @@ DEFAULTS = {
     "telegram_username": "@kareem_alnouq",
     "sell_rate": "2.80",
     "buy_rate": "3.00",
-    "wallet_address": "TBUxYF7vAqmCL2NBbcaXWXTpRvBaKRQHRy",
+    "wallet_address": "TDrbsW2D8wqRiSnskJVsei5or8UoEY5tW9",
     "recipient_name": "كريم ابراهيم الناعوق",
     "recipient_phone": "0597511457",
     "service_providers": "جوال باي",
