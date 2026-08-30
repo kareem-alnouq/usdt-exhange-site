@@ -24,7 +24,7 @@ DEFAULTS = {
     "phone": "0597511457",
     "whatsapp": "+970597511457",
     "telegram_username": "@kareem_alnouq",
-    "sell_rate": "2.85",
+    "sell_rate": "2.9",
     "buy_rate": "3.00",
     "wallet_address": "TDrbsW2D8wqRiSnskJVsei5or8UoEY5tW9",
     "recipient_name": "كريم ابراهيم الناعوق",
